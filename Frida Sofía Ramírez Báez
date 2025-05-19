@@ -1,0 +1,166 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Your Calling</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background-color: #eaf4fc;
+      color: #2c3e50;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #1b4f72;
+      font-size: 2.5em;
+    }
+
+    img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      margin-top: 20px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="checkbox"] {
+      accent-color: #3498db;
+    }
+
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+      padding: 12px;
+    }
+
+    td {
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    h2 {
+      color: #21618c;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Imagen superior decorativa -->
+  <img src="https://images.unsplash.com/photo-1600195077070-bb2f8c9891a1?auto=format&fit=crop&w=800&q=60" alt="Career image">
+
+  <h1>Find Your Calling</h1>
+  <p>
+    Not sure what to study or which career to choose? Don’t worry!  
+    This interactive quiz will help you discover your interests, skills, and passions,  
+    and suggest study areas that could be perfect for you.
+  </p>
+  <p>
+    Just check the skills and interests that describe you and your results will appear automatically!
+  </p>
+
+  <!-- Formulario con intereses -->
+  <form id="career-form">
+    <h2>Select the skills and interests that describe you best</h2>
+    <label><input type="checkbox" name="skills" value="creativity"> I’m creative</label>
+    <label><input type="checkbox" name="skills" value="problem-solving"> I like solving problems</label>
+    <label><input type="checkbox" name="skills" value="helping"> I enjoy helping people</label>
+    <label><input type="checkbox" name="skills" value="technology"> I’m interested in technology and computers</label>
+    <label><input type="checkbox" name="skills" value="numbers"> I like numbers and math</label>
+    <label><input type="checkbox" name="skills" value="science"> I’m curious about science and nature</label>
+    <label><input type="checkbox" name="skills" value="organization"> I enjoy planning and organizing things</label>
+  </form>
+
+  <!-- Resultados -->
+  <div id="results" class="hidden">
+    <h2>We suggest these study areas for you:</h2>
+    <table id="results-table">
+      <tr>
+        <th>Interest Area</th>
+        <th>Suggested Careers</th>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    const suggestions = {
+      "creativity": ["Graphic Design", "Advertising", "Architecture", "Visual Arts"],
+      "problem-solving": ["Engineering", "Mathematics", "Law", "Computer Science"],
+      "helping": ["Psychology", "Medicine", "Social Work", "Education"],
+      "technology": ["Software Engineering", "Cybersecurity", "Data Science", "IT"],
+      "numbers": ["Accounting", "Finance", "Statistics", "Actuarial Science"],
+      "science": ["Biology", "Environmental Science", "Chemistry", "Physics"],
+      "organization": ["Business Administration", "Project Management", "Logistics", "Marketing"]
+    };
+
+    const form = document.getElementById("career-form");
+    const resultsDiv = document.getElementById("results");
+    const resultsTable = document.getElementById("results-table");
+
+    form.addEventListener("change", updateResults);
+
+    function updateResults() {
+      const checked = document.querySelectorAll('input[name="skills"]:checked');
+      const selected = Array.from(checked).map(el => el.value);
+
+      resultsTable.innerHTML = `
+        <tr>
+          <th>Interest Area</th>
+          <th>Suggested Careers</th>
+        </tr>
+      `;
+
+      if (selected.length === 0) {
+        resultsDiv.classList.add("hidden");
+        return;
+      }
+
+      selected.forEach(skill => {
+        const careers = suggestions[skill];
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${capitalize(skill.replace("-", " "))}</td>
+          <td>${careers.join(", ")}</td>
+        `;
+        resultsTable.appendChild(row);
+      });
+
+      resultsDiv.classList.remove("hidden");
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  </script>
+
+</body>
+</html>

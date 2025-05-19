@@ -11,7 +11,7 @@
       color: #2c3e50;
       max-width: 800px;
       margin: auto;
-    }
+  }
 
     h1 {
       color: #1b4f72;
